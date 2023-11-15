@@ -12,18 +12,26 @@ import {
   TopCharts,
 } from "./pages";
 import Player from "./components/MusicPlayer/Player";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { useState } from "react";
 
 const App = () => {
-  const { activeSong } = useSelector((state) => state.player);
-
+  const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const [musicPlayer, setMusicPlayer] = useState(false);
+  const handleHideClick = () => {
+    setMusicPlayer(true);
+  };
+  const handleShowClick = () => {
+    setMusicPlayer(false);
+  };
   return (
     <div className="relative flex">
       <Sidebar />
       <div className="flex-1 flex flex-col bg-gradient-to-br from-black to-[#121286]">
         <Searchbar />
 
-        <div className="px-6 h-[calc(100vh)] overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col-reverse">
-          <div className="flex-1 h-fit pb-40 ">
+        <div className="px-6 h-[calc(100vh)] overflow-y-scroll hide-scrollbar flex lg:flex-row  xl:flex-row flex-col-reverse">
+          <div className="flex-1 flex h-fit  pb-40 ">
             <Routes>
               <Route path="/" element={<Discover />} />
               <Route path="/top-artists" element={<TopArtists />} />
@@ -34,15 +42,34 @@ const App = () => {
               <Route path="/search/:searchTerm" element={<Search />} />
             </Routes>
           </div>
-          <div className="xl:sticky relative top-0 h-500">
+
+          <div className="xl:sticky lg:sticky relative top-0 h-fit">
             <TopPlay />
           </div>
         </div>
       </div>
 
       {activeSong?.title && (
-        <div className="absolute h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10">
+        <div
+          className={`absolute h-28 bottom-0 left-0 right-0 flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10 
+          ${musicPlayer ? "hidden" : ""} `}
+        >
           <MusicPlayer />
+          <MdKeyboardArrowDown
+            className="h-6 w-6 text-white mr-5"
+            onClick={handleHideClick}
+          />
+        </div>
+      )}
+      {musicPlayer && (
+        <div
+          className="absolute h-5 bottom-0  flex animate-slideup bg-gradient-to-br from-white/10 to-[#2a2a80] backdrop-blur-lg rounded-t-3xl z-10 
+          right-0 left-0 "
+        >
+          <MdKeyboardArrowUp
+            className="absolute h-6 w-6 text-white right-5"
+            onClick={handleShowClick}
+          />
         </div>
       )}
     </div>
