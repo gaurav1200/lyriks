@@ -13,7 +13,6 @@ const SongBar = ({
   handlePlayClick,
 }) => {
   song = song?.attributes;
-  console.log(song);
 
   return (
     <div
@@ -28,20 +27,20 @@ const SongBar = ({
           src={
             artistId
               ? song?.artwork?.url.replace("{w}", "125").replace("{h}", "125")
-              : song?.images?.coverArt
+              : song?.artwork?.url.replace("{w}", "125").replace("{h}", "125")
           }
           alt={song?.title}
         />
         <div className="flex-1 flex flex-col justify-center mx-3">
           {!artistId ? (
-            <Link to={`/songs/${song.key}`}>
-              <p className="text-xl font-bold text-white">{song?.title}</p>
+            <Link to={`/songs/${song?.playParams?.id}`}>
+              <p className="text-xl font-bold text-white">{song?.name}</p>
             </Link>
           ) : (
             <p className="text-xl font-bold text-white">{song?.name}</p>
           )}
           <p className="text-base text-gray-300 mt-1">
-            {artistId ? song?.albumName : song?.artist}
+            {artistId ? song?.albumName : song?.artistName}
           </p>
         </div>
       </div>
@@ -49,6 +48,7 @@ const SongBar = ({
         <PlayPause
           isPlaying={isPlaying}
           activeSong={activeSong}
+          songBar={true}
           song={song}
           handlePause={handlePauseClick}
           handlePlay={() => handlePlayClick(song, i)}

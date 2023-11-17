@@ -6,7 +6,7 @@ import sample from "../assets/sample.json";
 
 const Discover = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  // const { data, isFetching, error } = useGetTopChartsQuery();
+  const { data, isFetching, error } = useGetTopChartsQuery();
 
   // const downloadFile = () => {
   //   const link = document.createElement("a");
@@ -19,9 +19,9 @@ const Discover = () => {
   // };
   // downloadFile();
 
-  let isFetching = false;
-  let data = sample;
-  let error = false;
+  // let isFetching = false;
+  // let data = sample;
+  // let error = false;
 
   const genreTitle = "Pop";
 

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const DetailsHeader = ({ artistId, artistData, songData }) => {
-  console.log(artistData);
   const artist = artistData?.data[0].attributes;
   const song =
     songData?.resources?.["shazam-songs"][

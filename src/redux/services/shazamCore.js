@@ -13,7 +13,7 @@ export const shazamCoreApi = createApi({
     },
     paramsSerializer: (params) => {
       params.locale = "en-US";
-      params.pageSize = "20";
+      params.pageSize = "50";
       params.startFrom = "0";
       return params;
     },
@@ -35,6 +35,15 @@ export const shazamCoreApi = createApi({
     getTopSongsByArtist: builder.query({
       query: ({ artistId }) => `/artists/get-top-songs?id=${artistId}`,
     }),
+    getV2SongDetails: builder.query({
+      query: ({ songid }) => `/songs/v2/get-details?id=${songid}`,
+    }),
+    getSongsByCountry: builder.query({
+      query: ({ listId }) => `/charts/track?listId=${listId}`,
+    }),
+    getCountries: builder.query({
+      query: () => `/charts/list`,
+    }),
   }),
 });
 
@@ -44,6 +53,9 @@ export const {
   useGetSongRelatedQuery,
   useGetArtistDetailsQuery,
   useGetTopSongsByArtistQuery,
+  useGetV2SongDetailsQuery,
+  useGetCountriesQuery,
+  useGetSongsByCountryQuery,
 } = shazamCoreApi;
 
 // const request = require("request");

@@ -41,6 +41,7 @@ const TopChartCard = ({
     <PlayPause
       isPlaying={isPlaying}
       activeSong={activeSong}
+      songBar={false}
       song={song}
       handlePause={handlePauseClick}
       handlePlay={handlePlayClick}
@@ -51,8 +52,8 @@ const TopChartCard = ({
 const TopPlay = () => {
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  // const { data } = useGetTopChartsQuery();
-  const data = sample;
+  const { data } = useGetTopChartsQuery();
+  // const data = sample;
   const divRef = useRef(null);
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
@@ -64,6 +65,7 @@ const TopPlay = () => {
   const handlePlayClick = (song, i) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
+    console.log(activeSong);
   };
   return (
     <div
@@ -107,7 +109,7 @@ const TopPlay = () => {
           modules={[FreeMode]}
           className="mt-2"
         >
-          {topPlays.map((song, i) => (
+          {topPlays?.map((song, i) => (
             <SwiperSlide
               key={song.key}
               style={{ width: "25%", height: "auto" }}

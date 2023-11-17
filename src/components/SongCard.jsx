@@ -28,6 +28,7 @@ const SongCard = ({ song, isPlaying, activeSong, i, data }) => {
           <PlayPause
             isPlaying={isPlaying}
             activeSong={activeSong}
+            songBar={false}
             song={song}
             handlePause={handlePauseClick}
             handlePlay={handlePlayClick}

@@ -5,6 +5,7 @@ import { DetailsHeader, Error, Loader, RelatedSongs } from "../components";
 import {
   useGetSongDetailsQuery,
   useGetSongRelatedQuery,
+  useGetTopSongsByArtistQuery,
 } from "../redux/services/shazamCore";
 import sample from "../assets/sample.json";
 
@@ -20,23 +21,29 @@ const SongDetails = () => {
     isFetching: isFetchingSongDetails,
     error,
   } = useGetSongDetailsQuery({ songid });
-  const relatedTracksId =
-    songData?.resources?.["related-tracks"][
-      Object.keys(songData?.resources?.["related-tracks"])[0]
+  const artistId =
+    songData?.resources?.["artists"][
+      Object.keys(songData?.resources?.["artists"])[0]
     ]?.id;
+  console.log(artistId);
   const {
     data: relatedSongsData,
     isFetching: isFetchingRelatedSongs,
     error: relatedSongError,
-  } = useGetSongRelatedQuery({ relatedTracksId });
+  } = useGetTopSongsByArtistQuery({ artistId });
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
   const data = sample;
   const handlePlayClick = (song, i) => {
+    console.log("play clicked");
+    console.log(song);
+    song?.attributes ? (song = song?.attributes) : song;
+
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
+    console.log(activeSong);
   };
 
   if (isFetchingSongDetails || isFetchingRelatedSongs)
@@ -54,8 +61,12 @@ const SongDetails = () => {
           {songData?.resources?.lyrics ? (
             songData?.resources?.lyrics[
               Object.keys(songData?.resources?.lyrics)[0]
-            ].attributes.text.map((line) => {
-              return <p className="text-gray-400 text-base my-1">{line}</p>;
+            ].attributes.text.map((line, i) => {
+              return (
+                <p key={i} className="text-gray-400 text-base my-1">
+                  {line}
+                </p>
+              );
             })
           ) : (
             <p className="text-gray-400 text-base my-1">No lyrics available</p>
@@ -63,6 +74,7 @@ const SongDetails = () => {
         </div>
       </div>
       <RelatedSongs
+        artistId=""
         songData={relatedSongsData}
         isPlaying={isPlaying}
         activeSong={activeSong}

@@ -10,10 +10,11 @@ const RelatedSongs = ({
   handlePlayClick,
 }) => {
   let data;
-  if (songData) data = Object.values(songData?.resources?.["shazam-songs"]);
+  console.log(songData);
+  console.log(artistData);
+  if (songData) data = Object.values(songData?.data);
   else data = Object.values(artistData?.data);
-  console.log(songData?.resources?.["shazam-songs"]);
-  console.log(data);
+
   return (
     <div className="flex flex-col">
       <h2 className="font-bold text-3xl text-white">Related Songs:</h2>
