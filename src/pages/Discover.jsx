@@ -3,9 +3,13 @@ import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 import sample from "../assets/sample.json";
+import { selectGenreListId } from "../redux/features/playerSlice";
 
 const Discover = () => {
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const dispatch = useDispatch();
+  const { activeSong, isPlaying, genreListId } = useSelector(
+    (state) => state.player
+  );
   const { data, isFetching, error } = useGetTopChartsQuery();
 
   // const downloadFile = () => {
@@ -34,8 +38,10 @@ const Discover = () => {
           Discover {genreTitle}
         </h2>
         <select
-          onChange={() => {}}
-          value=""
+          onChange={(e) => {
+            dispatch(selectGenreListId(e.target.value));
+          }}
+          value={genreListId}
           className="bg-black text-gray-300 p-3 text-sm rounded-lg outline-none sm:mt-0 mt-5"
         >
           {genres.map((genre) => (
