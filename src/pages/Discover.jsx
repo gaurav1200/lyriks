@@ -4,6 +4,7 @@ import { genres } from "../assets/constants";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 import sample from "../assets/sample.json";
 import { selectGenreListId } from "../redux/features/playerSlice";
+import { useState } from "react";
 
 const Discover = () => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Discover = () => {
     (state) => state.player
   );
   const { data, isFetching, error } = useGetTopChartsQuery();
+  const [genreTitle, setGenreTitle] = useState("Pop");
 
   // const downloadFile = () => {
   //   const link = document.createElement("a");
@@ -27,7 +29,7 @@ const Discover = () => {
   // let data = sample;
   // let error = false;
 
-  const genreTitle = "Pop";
+  // const genreTitle = "Pop";
 
   if (isFetching) return <Loader title="Loading songs..." />;
   if (error) return <Error />;
@@ -39,6 +41,11 @@ const Discover = () => {
         </h2>
         <select
           onChange={(e) => {
+            genres.map((genre) => {
+              if (genre.value === e.target.value) {
+                setGenreTitle(genre.title);
+              }
+            });
             dispatch(selectGenreListId(e.target.value));
           }}
           value={genreListId}
