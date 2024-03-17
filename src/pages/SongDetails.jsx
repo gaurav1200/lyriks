@@ -7,7 +7,6 @@ import {
   useGetSongRelatedQuery,
   useGetTopSongsByArtistQuery,
 } from "../redux/services/shazamCore";
-import sample from "../assets/sample.json";
 
 import { useDispatch, useSelector } from "react-redux";
 import { playPause, setActiveSong } from "../redux/features/playerSlice";
@@ -35,7 +34,7 @@ const SongDetails = () => {
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
-  const data = sample;
+
   const handlePlayClick = (song, i) => {
     console.log("play clicked");
     console.log(song);
