@@ -6,7 +6,6 @@ import {
   useGetArtistDetailsQuery,
   useGetTopSongsByArtistQuery,
 } from "../redux/services/shazamCore";
-import sample from "../assets/sample.json";
 
 import { useSelector } from "react-redux";
 
