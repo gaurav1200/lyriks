@@ -13,8 +13,10 @@ import {
 } from "./pages";
 import Player from "./components/MusicPlayer/Player";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
+const visitEndpoint = import.meta.env.VITE_VISIT_API_ENDPOINT;
 const App = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const [musicPlayer, setMusicPlayer] = useState(false);
@@ -24,6 +26,26 @@ const App = () => {
   const handleShowClick = () => {
     setMusicPlayer(false);
   };
+  useEffect(() => {
+    if (sessionStorage.getItem("visit")) {
+      console.log("visited");
+    } else {
+      const data = {
+        webSiteName: "lyrics",
+        count: 1,
+      };
+      axios
+        .post(`${visitEndpoint}/visit`, { data })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    sessionStorage.setItem("visit", true);
+  }, []);
+
   return (
     <div className="relative flex ">
       <Sidebar />
