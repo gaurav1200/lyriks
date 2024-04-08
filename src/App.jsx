@@ -31,7 +31,7 @@ const App = () => {
       console.log("visited");
     } else {
       const data = {
-        webSiteName: "lyrics",
+        webSiteName: "lyriks",
         count: 1,
       };
       axios
